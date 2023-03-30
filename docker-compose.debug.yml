@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  api-debug:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    command: ["sh", "-c", "pip install debugpy -t /tmp && python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn app:app --reload --host 0.0.0.0 --port 8000"]
+    ports:
+      - 8000:8000
+    networks:
+      - potatonet
+
+  interface-debug:
+    build:
+      context: ./interface
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - potatonet
+
+networks:
+  potatonet:
