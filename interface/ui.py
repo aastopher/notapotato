@@ -2,6 +2,19 @@ import requests
 import asyncio
 from nicegui import ui
 
+#### GLOBALS ####
+
+# Define the URL of your API endpoint
+api_url = "http://fastapi:8000/potato"
+# api_url = "http://127.0.0.1:8000/potato"
+
+# Define and set ui color
+theme_color = '#c3ac74'
+ui.colors(secondary=theme_color)
+
+
+#### FUNCTIONS ####
+
 async def get_image_from_api(url):
     '''function to retrieve image data and create html tag'''
 
@@ -15,23 +28,6 @@ async def get_image_from_api(url):
     img_tag = f'<img src="{base64_img}">'
 
     return img_tag
-
-# Define the URL of your API endpoint
-api_url = "http://fastapi:8000/potato"
-# api_url = "http://127.0.0.1:8000/potato"
-
-# Define and set ui color
-theme_color = '#c3ac74'
-ui.colors(secondary=theme_color)
-
-
-# Create Title
-with ui.element('span').style(f'background-color: {theme_color}').classes('w-full justify-center'):
-    with ui.row().classes('w-full justify-center'):
-
-        ui.label('Not a Potato') \
-            .classes('text-h3 text-center') \
-            .style('font-family: "Trebuchet MS", sans-serif; font-size: 500%; font-weight: 800; padding-bottom: 1rem; padding-top: 1rem; color: white')
 
 # Define a button handler
 async def button_handler():
@@ -48,6 +44,17 @@ async def button_handler():
             ui.html(img_tag).classes('bg-transparent')
 
 
+#### PAGE ####
+
+# Create Title
+with ui.element('span').style(f'background-color: {theme_color}').classes('w-full justify-center'):
+    with ui.row().classes('w-full justify-center'):
+
+        ui.label('Not a Potato') \
+            .classes('text-h3 text-center') \
+            .style('font-family: "Trebuchet MS", sans-serif; font-size: 500%; font-weight: 800; padding-bottom: 1rem; padding-top: 1rem; color: white')
+
+
 # Create button with image flex row underneath
 with ui.row().classes('w-full justify-center').style('padding-top: 1rem'):
 
@@ -59,4 +66,4 @@ with ui.row().classes('w-full justify-center').style('padding-top: 1rem'):
     # Define image container
     container = ui.row().classes('w-full justify-center flex-wrap').style('padding-top: 1rem')
 
-ui.run()
+ui.run(title='notapotato', favicon='./static/favicon.ico')
