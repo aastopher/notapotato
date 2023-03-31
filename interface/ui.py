@@ -1,5 +1,3 @@
-import requests
-import asyncio
 import aiohttp
 import os
 from nicegui import ui
@@ -15,42 +13,6 @@ ui.colors(secondary=theme_color)
 
 
 #### FUNCTIONS ####
-
-# async def get_image_from_api(url):
-#     '''function to retrieve image data and create html tag'''
-
-#     # Send a GET request to the API endpoint
-#     response = requests.get(url)
-
-#     # Get the base64-encoded image data and stuff in html data string
-#     base64_img = f"data:image/png;base64,{response.json()['image']}"
-
-#     # Create an HTML `img` tag with the base64-encoded image data
-#     img_tag = f'<img src="{base64_img}">'
-
-#     return img_tag
-
-# async def get_image_from_api(url, max_retries=5):
-#     '''function to retrieve image data and create html tag'''
-
-#     retries = 0
-#     while retries < max_retries:
-#         # Send a GET request to the API endpoint
-#         response = requests.get(url)
-
-#         if response.ok:
-#             # Get the base64-encoded image data and stuff in html data string
-#             base64_img = f"data:image/png;base64,{response.json()['image']}"
-
-#             # Create an HTML `img` tag with the base64-encoded image data
-#             img_tag = f'<img src="{base64_img}">'
-
-#             return img_tag
-#         else:
-#             # increment retries
-#             retries += 1
-
-#     raise ValueError(f"Failed to retrieve image after {max_retries} attempts")
 
 async def get_image_from_api(url):
     '''function to retrieve image data and create html tag'''
