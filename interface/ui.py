@@ -68,9 +68,8 @@ async def get_image_from_api(url):
 # Define a button handler
 async def button_handler():
     '''button handler collects returned image tags into a container'''
-    # Sleep so notification has time to execute
-    await asyncio.sleep(0.01)
 
+    ui.notify('Generating potato...')
     # Collect image tag
     img_tag = await get_image_from_api(api_url)
 
@@ -95,7 +94,7 @@ with ui.element('span').style(f'background-color: {theme_color}').classes('w-ful
 with ui.row().classes('w-full justify-center').style('padding-top: 1rem'):
 
     # Start async task and notify user
-    ui.button('Generate Potato', on_click=lambda: asyncio.create_task(button_handler()) and ui.notify('Generating potato...')) \
+    ui.button('Generate Potato', on_click=button_handler) \
         .classes('items-center') \
         .props('unelevated color=secondary')
     
