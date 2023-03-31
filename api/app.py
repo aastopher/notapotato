@@ -1,9 +1,16 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Request
+from slowapi.errors import RateLimitExceeded
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
 from pydantic import BaseModel
 import subprocess
 
-# Create the FastAPI instance
 app = FastAPI()
+
+# Define Rate limiter and add exception handler
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Define the response model for your API endpoint
 class PotatoImage(BaseModel):
@@ -12,7 +19,9 @@ class PotatoImage(BaseModel):
 
 # Define the endpoint to generate the image
 @app.get("/potato", response_model=PotatoImage)
-async def generate_potato():
+@limiter.limit("100/minute")
+async def generate_potato(request: Request):
+    
     # Run the script to generate the image and capture the output
     output = subprocess.check_output(["python", "gen_potato.py"])
 

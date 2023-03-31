@@ -1,12 +1,12 @@
 import requests
 import asyncio
+import os
 from nicegui import ui
 
 #### GLOBALS ####
 
 # Define the URL of your API endpoint
-api_url = "http://fastapi:8000/potato"
-# api_url = "http://127.0.0.1:8000/potato"
+api_url = os.environ.get('API_URL')
 
 # Define and set ui color
 theme_color = '#c3ac74'
@@ -52,7 +52,7 @@ with ui.element('span').style(f'background-color: {theme_color}').classes('w-ful
 
         ui.label('Not a Potato') \
             .classes('text-h3 text-center') \
-            .style('font-family: "Trebuchet MS", sans-serif; font-size: 500%; font-weight: 800; padding-bottom: 1rem; padding-top: 1rem; color: white')
+            .style('font-family: "Roboto", sans-serif; font-size: 500%; font-weight: 700; padding-bottom: 1rem; padding-top: 1rem; color: white')
 
 
 # Create button with image flex row underneath
