@@ -1,5 +1,4 @@
 import io, sys, os, pickle, base64, torch, torchvision
-from PIL import Image
 from generator import Generator
 
 num_gpu = 0 # number of GPUs available. Use 0 for CPU mode.

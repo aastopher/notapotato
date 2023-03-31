@@ -1,4 +1,4 @@
-import os, torch
+import torch
 
 num_channels = 3 # number of channels in the training images. For color images this is 3 (RGB)
 image_size = 64 # also the size of feature maps for the generator and discriminator
