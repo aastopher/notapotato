@@ -1,11 +1,10 @@
 import aiohttp
-import os
 from nicegui import ui
 
 #### GLOBALS ####
 
 # Define the URL of your API endpoint
-api_url = os.environ.get('API_URL')
+api_url = 'http://fastapi:8000/potato'
 
 # Define and set ui color
 theme_color = '#c3ac74'

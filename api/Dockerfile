@@ -9,7 +9,7 @@ COPY requirements.txt .
 RUN addgroup --system appgroup && \
     adduser --system --ingroup appgroup appuser && \
     pip install --no-cache-dir -r requirements.txt && \
-    pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu && \
+    pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu --trusted-host download.pytorch.org && \
     chown -R appuser:appgroup /app && \
     chmod -R g+w /app
 
