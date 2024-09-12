@@ -43,7 +43,7 @@ class Image(BaseModel):
     "/potato",
     response_model=Image,
     summary="Generate Potato Image",
-    description="Generates an image of a potato and returns it as binary data.",
+    description="Generates an image of a potato and returns it as a base64 string.",
 )
 @limiter.limit("100/minute")
 async def generate_potato(request: Request):
