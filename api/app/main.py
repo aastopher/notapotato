@@ -4,6 +4,17 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from pydantic import BaseModel
 import subprocess
+from loguru import logger
+
+# configure logger
+logger.add(
+    "logs/main.log", 
+    rotation="25 MB", 
+    retention="30 days",
+    colorize=True, 
+    format="{time} | {level} | {name}:{function}:{line} - {message}", 
+    level="INFO"
+)
 
 app = FastAPI()
 
@@ -12,7 +23,7 @@ limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Define the response model for your API endpoint
+# Define the response model endpoint
 class PotatoImage(BaseModel):
     image: bytes
     content_type: str
@@ -22,8 +33,13 @@ class PotatoImage(BaseModel):
 @limiter.limit("100/minute")
 async def generate_potato(request: Request):
     
-    # Run the script to generate the image and capture the output
-    output = subprocess.check_output(["python", "gen_potato.py"])
+    logger.info('generating potato')
+    try:
+        # Run the script to generate the image and capture the output
+        output = subprocess.check_output(["python", "gen_potato.py"])
+        logger.info('potato generated successfully!')
+    except Exception as e:
+        logger.info(f'generating potato failed: {e}')
 
     # Return the image as a bytes object with content type "image/png"
     return PotatoImage(image=output, content_type="image/png")

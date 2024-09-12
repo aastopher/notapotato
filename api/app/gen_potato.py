@@ -15,7 +15,7 @@ class DeviceUnpickler(pickle.Unpickler):
     '''unpickle on current device (CPU or GPU), independent of which device the model was trained on'''
     def find_class(self, module, name):
         if module == 'torch.storage' and name == '_load_from_bytes':
-            return lambda b: torch.load(io.BytesIO(b), map_location=device)
+            return lambda b: torch.load(io.BytesIO(b), map_location=device, weights_only=True)
         else: return super().find_class(module, name)
 
 def gen_tater(model):

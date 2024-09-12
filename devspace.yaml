@@ -1,0 +1,44 @@
+version: v2beta1
+name: notapotato
+
+images:
+  fastapi:
+    image: fastapi
+    dockerfile: api/Dockerfile
+    context: api
+  ui:
+    image: ui
+    dockerfile: ui/Dockerfile
+    context: ui
+
+deployments:
+  fastapi:
+    helm:
+      values:
+        containers:
+          - image: fastapi
+            name: fastapi-container
+        service:
+          ports:
+            - containerPort: 8000
+              port: 8000
+              protocol: TCP
+  ui:
+    helm:
+      values:
+        containers:
+          - image: ui
+            name: ui-container
+        service:
+          ports:
+            - containerPort: 8080
+              port: 8080
+              protocol: TCP
+dev:
+  fastapi:
+    imageSelector: fastapi
+  ui:
+    imageSelector: ui
+    sync:
+    - path: ./ui/app/:/app/
+      disableDownload: true
